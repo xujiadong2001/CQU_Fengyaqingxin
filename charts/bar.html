@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>出现最多次数前十的字在每章的统计</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main" style="width: 1100px; height: 450px;"></div>
+    <script src="./js/echarts.js"></script>
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/data.js"></script>
+    <script>
+      // 绘制
+      function draw() {
+        let NameList = [
+          "第一章",
+          "第二章",
+          "第三章",
+          "第四章",
+          "第五章",
+          "第六章",
+          "第七章",
+          "第八章",
+        ];
+        let list = [];
+        for (let i = 0; i < NameList.length; i++) {
+          list.push({
+            name: NameList[i],
+            type: "bar",
+            stack: "total",
+            label: {
+              show: true,
+            },
+            emphasis: {
+              focus: "series",
+            },
+            data: data2_Y[i],
+          });
+        }
+        // 初始化echarts实例
+        let myEcharts = echarts.init(document.getElementById("main"));
+        //echarts配置项
+        let option = {
+          title: {
+            text: "出现最多次数前十的字在每章的统计",
+            left: "left",
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              // Use axis to trigger tooltip
+              type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+            },
+          },
+          legend: {
+            orient: "vertical",
+            left: "right",
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          yAxis: {
+            type: "value",
+          },
+          xAxis: {
+            type: "category",
+            data: data2_X,
+          },
+          series: list,
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myEcharts.setOption(option);
+      }
+      draw();
+    </script>
+  </body>
+</html>
